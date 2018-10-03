@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             ImageDecoder id = new ImageDecoder();
-            id.DecodeBPCS();
+            id.DecodeLSB();
         } catch (IOException e) {
             e.printStackTrace();
         }
