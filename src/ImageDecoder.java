@@ -15,8 +15,7 @@ public class ImageDecoder {
     }
 
     public void DecodeLSB(){
-        String res = "";
-        int counter=0;
+        StringBuilder res = new StringBuilder();
         outer:
         for (int y = cipherImg.getHeight() -1; y >= 0; y--) {
             for (int x = cipherImg.getWidth()-1; x >= 0; x--) {
@@ -26,11 +25,9 @@ public class ImageDecoder {
                 String blue = bp.substring(16,24);
 
                 // add LSB to result
-                res += red.charAt(red.length()-1);
-                res += green.charAt(green.length()-1);
-                res += blue.charAt(blue.length()-1);
-                System.out.println(counter);
-
+                res.append(red.charAt(red.length()-1));
+                res.append(green.charAt(green.length()-1));
+                res.append(blue.charAt(blue.length()-1));
             }
         }
         char[] characters = new char[res.length()];
@@ -47,6 +44,10 @@ public class ImageDecoder {
         try{
             FileOutputStream fos = new FileOutputStream(fname);
             DataOutputStream dos = new DataOutputStream(fos);
+
+            for(char c : characters){
+                dos.write(c);
+            }
         }
         catch(FileNotFoundException e){
             System.out.println(e);
