@@ -13,9 +13,6 @@ public class ImageDecoder {
         cipherImg = ImageIO.read(new File("res/stego_cover14.bmp"));
     }
 
-    public void DecodeBPCS(){
-    }
-
     public void DecodeLSB(){
         StringBuilder res = new StringBuilder();
         outer:
