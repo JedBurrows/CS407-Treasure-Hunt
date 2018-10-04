@@ -12,57 +12,41 @@ public class ImageDecoder {
     }
 
     public void DecodeBPCS(){
-        for (int y = 0; y < cipherImg.getHeight(); y++) {
-            for (int x = 0; x < cipherImg.getWidth(); x++) {
-                String rgb = Integer.toBinaryString(cipherImg.getRGB(x, y)).substring(8);
-
-            }
-        }
-        System.out.println();
     }
 
     public void DecodeLSB(){
         String res = "";
+        int counter=0;
         outer:
-        for (int y = 0; y < cipherImg.getHeight(); y++) {
-            for (int x = 0; x < cipherImg.getWidth(); x++) {
+        for (int y = cipherImg.getHeight() -1; y >= 0; y--) {
+            for (int x = cipherImg.getWidth()-1; x >= 0; x--) {
                 String bp = Integer.toBinaryString(cipherImg.getRGB(x, y)).substring(8);
                 String red = bp.substring(0,8);
                 String green = bp.substring(8,16);
                 String blue = bp.substring(16,24);
 
                 // add LSB to result
-                if(res.length() == 83 * 8){
-                    break outer;
-                }
                 res += red.charAt(red.length()-1);
-                if(res.length() == 83 * 8){
-                    break outer;
-                }
                 res += green.charAt(green.length()-1);
-                if(res.length() == 83 * 8){
-                    break outer;
-                }
                 res += blue.charAt(blue.length()-1);
+                System.out.println(counter);
 
             }
         }
-        char[] characters = new char[res.length()/8];
+        char[] characters = new char[res.length()];
         for(int i=0, j=0; i<res.length(); i++){
             if(i % 8 == 0 && i>0){
-                characters[j] = (char) (Integer.parseInt(res.substring(i - 8, i)));
+                characters[j] = (char) Integer.parseInt(res.substring(i-8,i));
+                System.out.print(characters[j]);
                 j++;
             }
         }
+
+
         String fname = "output.txt";
         try{
             FileOutputStream fos = new FileOutputStream(fname);
             DataOutputStream dos = new DataOutputStream(fos);
-
-            for(char c : characters){
-                dos.writeChar(c);
-
-            }
         }
         catch(FileNotFoundException e){
             System.out.println(e);
@@ -72,6 +56,24 @@ public class ImageDecoder {
         }
 
 
+    }
+
+    public void EncodeMsg(String message) throws IOException {
+        byte[] bytes = message.getBytes();
+        BufferedImage img = ImageIO.read(new File("res/meandchloe.bmp"));
+        int i=0;
+        for(int y=0; y<img.getHeight(); y++){
+            for(int x=0; x<img.getWidth(); x++){
+                int lsb = bytes[i] & 0x01;
+                String bp = Integer.toBinaryString(img.getRGB(x, y)).substring(8);
+                String red = bp.substring(0,8);
+                String green = bp.substring(8,16);
+                String blue = bp.substring(16,24);
+
+
+
+            }
+        }
     }
 }
 
