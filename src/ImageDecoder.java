@@ -32,15 +32,15 @@ public class ImageDecoder {
                 String blue = bp.substring(16,24);
 
                 // add LSB to result
-                if(res.length() > 83 * 8){
+                if(res.length() == 83 * 8){
                     break outer;
                 }
                 res += red.charAt(red.length()-1);
-                if(res.length() > 83 * 8){
+                if(res.length() == 83 * 8){
                     break outer;
                 }
                 res += green.charAt(green.length()-1);
-                if(res.length() > 83 * 8){
+                if(res.length() == 83 * 8){
                     break outer;
                 }
                 res += blue.charAt(blue.length()-1);
